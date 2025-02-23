@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-Commerce Churn Predictor</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .section-header {
+            color: #007bff;
+            margin-top: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #007bff;
+        }
+        .form-group label {
+            font-weight: 500;
+        }
+        .prediction-result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .low-risk {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .medium-risk {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .high-risk {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center mb-4">E-Commerce Customer Churn Predictor</h2>
+        
+        <form id="predictionForm">
+            <h4 class="section-header">Basic Information</h4>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>Tenure (months)</label>
+                    <input type="number" class="form-control" name="Tenure" required min="0">
+                </div>
+                <div class="form-group col-md-4">
+                    <label>City Tier</label>
+                    <select class="form-control" name="CityTier" required>
+                        <option value="1">Tier 1</option>
+                        <option value="2">Tier 2</option>
+                        <option value="3">Tier 3</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Warehouse to Home (km)</label>
+                    <input type="number" class="form-control" name="WarehouseToHome" required>
+                </div>
+            </div>
+
+            <h4 class="section-header">User Preferences</h4>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>Preferred Login Device</label>
+                    <select class="form-control" name="PreferredLoginDevice" required>
+                        <option value="Phone">Phone</option>
+                        <option value="Computer">Computer</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Preferred Payment Mode</label>
+                    <select class="form-control" name="PreferredPaymentMode" required>
+                        <option value="Debit Card">Debit Card</option>
+                        <option value="Credit Card">Credit Card</option>
+                        <option value="UPI">UPI</option>
+                        <option value="Cash on Delivery">Cash on Delivery</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Gender</label>
+                    <select class="form-control" name="Gender" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+            </div>
+
+            <h4 class="section-header">Shopping Behavior</h4>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>Hours Spent on App</label>
+                    <input type="number" class="form-control" name="HourSpendOnApp" required min="0" step="0.1">
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Number of Devices Registered</label>
+                    <input type="number" class="form-control" name="NumberOfDeviceRegistered" required min="1">
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Preferred Order Category</label>
+                    <select class="form-control" name="PreferedOrderCat" required>
+                        <option value="Laptop & Accessory">Laptop & Accessory</option>
+                        <option value="Mobile">Mobile</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Grocery">Grocery</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+            </div>
+
+            <h4 class="section-header">Order Details</h4>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label>Order Count</label>
+                    <input type="number" class="form-control" name="OrderCount" required min="0">
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Days Since Last Order</label>
+                    <input type="number" class="form-control" name="DaySinceLastOrder" required min="0">
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Cashback Amount</label>
+                    <input type="number" class="form-control" name="CashbackAmount" required min="0">
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Coupons Used</label>
+                    <input type="number" class="form-control" name="CouponUsed" required min="0">
+                </div>
+            </div>
+
+            <h4 class="section-header">Customer Satisfaction</h4>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>Satisfaction Score (1-5)</label>
+                    <input type="number" class="form-control" name="SatisfactionScore" required min="1" max="5">
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Complaint Filed</label>
+                    <select class="form-control" name="Complain" required>
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Order Amount Hike (%)</label>
+                    <input type="number" class="form-control" name="OrderAmountHikeFromlastYear" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>Marital Status</label>
+                    <select class="form-control" name="MaritalStatus" required>
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block mt-4">Predict Churn Probability</button>
+        </form>
+
+        <div id="result" class="prediction-result" style="display: none;"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#predictionForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                var formData = {};
+                $(this).serializeArray().forEach(function(item) {
+                    formData[item.name] = item.value;
+                });
+
+                $.ajax({
+                    url: '/predict',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function(response) {
+                        if (response.success) {
+                            var probability = response.churn_probability;
+                            var resultDiv = $('#result');
+                            var message = `<h4>Churn Probability: ${probability}%</h4>`;
+                            
+                            if (probability < 30) {
+                                resultDiv.removeClass().addClass('prediction-result low-risk');
+                                message += '<p>Low Risk: This customer is likely to stay. Continue providing excellent service!</p>';
+                            } else if (probability < 70) {
+                                resultDiv.removeClass().addClass('prediction-result medium-risk');
+                                message += '<p>Medium Risk: This customer might churn. Consider proactive engagement.</p>';
+                            } else {
+                                resultDiv.removeClass().addClass('prediction-result high-risk');
+                                message += '<p>High Risk: Immediate attention required! Implement retention strategies.</p>';
+                            }
+                            
+                            resultDiv.html(message).show();
+                        } else {
+                            alert('Error making prediction: ' + response.error);
+                        }
+                    },
+                    error: function() {
+                        alert('Error communicating with the server');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -45,3 +45,22 @@ python app.py
 - Pandas
 - Bootstrap
 - JavaScript
+
+
+# if you want how to load and view a .jpblib files in python
+import joblib
+# Load the joblib file
+model = joblib.load('path/to/your/file.joblib')
+# Print the model or inspect its attributes
+print(model)
+
+# if you want how to load and view a .csv files in python
+import pandas as pd
+# Load the CSV file
+data = pd.read_csv('path/to/your/file.csv')
+# Print the first few rows of the dataframe
+print(data.head())
+
+git rm --cached *.csv *.xlsx *.joblib
+git commit -m "Remove ignored files from repository"
+git push origin master

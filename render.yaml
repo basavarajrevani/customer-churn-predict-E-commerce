@@ -1,5 +1,5 @@
 
-pythonVersion: 3.11.8 
+pythonVersion: 3.11.8  
 services:
   - type: web
     name: e-commerce-churn-predictor
